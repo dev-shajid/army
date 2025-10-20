@@ -7,8 +7,6 @@ import {
     SidebarContent,
     SidebarFooter,
     SidebarGroup,
-    SidebarGroupContent,
-    SidebarGroupLabel,
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
@@ -24,6 +22,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import AppSidebarUser from "./app-sidebar-user"
+import { DEFAULT_REDIRECT_URL } from "@/route"
 
 interface ISidebarItem {
     title: string
@@ -79,13 +78,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
         <Sidebar {...props}>
             <SidebarHeader className="border-b border-sidebar-border">
-                <div className="flex items-center gap-2 px-4 py-3">
-                    <Shield className="h-6 w-6 text-sidebar-primary" />
-                    <div className="flex flex-col">
-                        <span className="text-sm font-semibold text-sidebar-foreground">Army Dashboard</span>
-                        <span className="text-xs text-sidebar-foreground/60">Operations Management</span>
+                <Link href={DEFAULT_REDIRECT_URL}>
+                    <div className="flex items-center gap-2 px-4 py-3">
+                        <Shield className="h-6 w-6 text-sidebar-primary" />
+                        <div className="flex flex-col">
+                            <span className="text-sm font-semibold text-sidebar-foreground">Army Dashboard</span>
+                            <span className="text-xs text-sidebar-foreground/60">Operations Management</span>
+                        </div>
                     </div>
-                </div>
+                </Link>
             </SidebarHeader>
 
             <SidebarContent>

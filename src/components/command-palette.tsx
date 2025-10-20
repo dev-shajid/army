@@ -2,9 +2,9 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { BookOpen, ClipboardList, GraduationCap, Calendar, FileText, Folder, Search, Smile, Calculator, User, CreditCard, Settings } from "lucide-react"
+import { BookOpen, ClipboardList, GraduationCap, Calendar, FileText, Folder, Search } from "lucide-react"
 
-import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "@/components/ui/command"
+import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 
 const commandItems = [
   // SOP Library
@@ -56,7 +56,7 @@ export default function CommandPalette() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground border border-input rounded-md hover:bg-accent hover:text-accent-foreground transition-colors w-full max-w-sm"
+        className="flex cursor-pointer items-center gap-2 px-3 py-2 text-sm text-muted-foreground border border-input rounded-md hover:bg-accent hover:text-accent-foreground transition-colors w-full max-w-sm"
       >
         <Search className="h-4 w-4" />
         <span>Search pages...</span>

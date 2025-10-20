@@ -15,38 +15,102 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel,
-  FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
 import * as z from "zod"
 import Link from "next/link"
+import { useState } from "react"
+import { signup } from "@/services/auth.service"
+import { AuthError } from "@supabase/supabase-js"
 
-const formSchema = z.object({
-  fullname: z.string().min(2, "Full name must be at least 2 characters."),
-  email: z.email("Please enter a valid email address."),
+export const SignupSchema = z.object({
+  baNo: z.string().min(1, "BA No is required."),
+  rank: z.string().min(1, "Rank is required."),
+  name: z.string().min(2, "Name must be at least 2 characters."),
+  unitName: z.string().min(1, "Unit Name is required."),
+  appointment: z.string().min(1, "Appointment is required."),
+  formation: z.string().min(1, "Formation is required."),
+  mobile: z.string().min(10, "Please enter a valid mobile number."),
+  email: z.string().email("Please enter a valid email address."),
   password: z
     .string()
-    .min(5, "Password must be at least 5 characters.")
+    .min(8, "Password must be at least 8 characters.")
 })
 
 export function SignUpForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [showVerificationMessage, setShowVerificationMessage] = useState(false)
+
+  const form = useForm<z.infer<typeof SignupSchema>>({
+    resolver: zodResolver(SignupSchema),
     defaultValues: {
-      fullname: "",
+      baNo: "",
+      rank: "",
+      name: "",
+      unitName: "",
+      appointment: "",
+      formation: "",
+      mobile: "",
       email: "",
       password: "",
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    console.log(data)
+  async function onSubmit(data: z.infer<typeof SignupSchema>) {
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      const redirectUrl = `${window.location.origin}/signin`
+      await signup(data, redirectUrl)
+      setShowVerificationMessage(true)
+    } catch (error) {
+      const message = (error as AuthError).message ?? 'Failed to create account. Please try again.'
+      setError(message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  if (showVerificationMessage) {
+    return (
+      <div className={cn("flex flex-col gap-6", className)} {...props}>
+        <Card>
+          <CardHeader className="text-center">
+            <CardTitle className="text-xl">Verify your email</CardTitle>
+            <CardDescription>
+              We&apos;ve sent a verification link to your email
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-center space-y-4">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
+              <svg
+                className="h-6 w-6 text-blue-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Please check your email and click on the verification link to activate your account.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    )
   }
 
   return (
@@ -61,42 +125,120 @@ export function SignUpForm({
         <CardContent>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <FieldGroup>
-              <Field>
-                <Button variant="outline" type="button">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path
-                      d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"
-                      fill="currentColor"
-                    />
-                  </svg>
-                  Login with Apple
-                </Button>
-                <Button variant="outline" type="button">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path
-                      d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                  Login with Google
-                </Button>
-              </Field>
-              <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                Or continue with
-              </FieldSeparator>
-
               <Controller
-                name="fullname"
+                name="baNo"
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor={field.name}>Full Name</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>BA No</FieldLabel>
                     <Input
                       {...field}
                       id={field.name}
                       type="text"
                       aria-invalid={fieldState.invalid}
-                      placeholder="Enter your Full Name"
+                      placeholder="Enter your BA No"
+                    />
+                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                  </Field>
+                )}
+              />
+              <Controller
+                name="rank"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name}>Rank</FieldLabel>
+                    <Input
+                      {...field}
+                      id={field.name}
+                      type="text"
+                      aria-invalid={fieldState.invalid}
+                      placeholder="Enter your Rank"
+                    />
+                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                  </Field>
+                )}
+              />
+              <Controller
+                name="name"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name}>Name</FieldLabel>
+                    <Input
+                      {...field}
+                      id={field.name}
+                      type="text"
+                      aria-invalid={fieldState.invalid}
+                      placeholder="Enter your Name"
+                    />
+                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                  </Field>
+                )}
+              />
+              <Controller
+                name="unitName"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name}>Unit Name</FieldLabel>
+                    <Input
+                      {...field}
+                      id={field.name}
+                      type="text"
+                      aria-invalid={fieldState.invalid}
+                      placeholder="Enter your Unit Name"
+                    />
+                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                  </Field>
+                )}
+              />
+              <Controller
+                name="appointment"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name}>Appointment</FieldLabel>
+                    <Input
+                      {...field}
+                      id={field.name}
+                      type="text"
+                      aria-invalid={fieldState.invalid}
+                      placeholder="Enter your Appointment"
+                    />
+                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                  </Field>
+                )}
+              />
+              <Controller
+                name="formation"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name}>Formation</FieldLabel>
+                    <Input
+                      {...field}
+                      id={field.name}
+                      type="text"
+                      aria-invalid={fieldState.invalid}
+                      placeholder="Enter your Formation"
+                    />
+                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                  </Field>
+                )}
+              />
+              <Controller
+                name="mobile"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name}>Mobile Number</FieldLabel>
+                    <Input
+                      {...field}
+                      id={field.name}
+                      type="tel"
+                      aria-invalid={fieldState.invalid}
+                      placeholder="Enter your Mobile Number"
                     />
                     {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                   </Field>
@@ -136,10 +278,19 @@ export function SignUpForm({
                   </Field>
                 )}
               />
+
+              {error && (
+                <div className="rounded-md bg-destructive/7 border border-destructive/20 p-3 text-sm text-destructive">
+                  {error}
+                </div>
+              )}
+
               <Field>
-                <Button type="submit">Login</Button>
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? 'Creating account...' : 'Create Account'}
+                </Button>
                 <FieldDescription className="text-center">
-                  Already have an account? <Link href="/sigin">Sign in</Link>
+                  Already have an account? <Link href="/signin">Sign in</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
