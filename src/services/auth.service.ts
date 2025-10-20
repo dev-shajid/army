@@ -23,9 +23,10 @@ export async function login(data: { email: string; password: string }) {
   return null
 }
 
-export async function signup(data: z.infer<typeof SignupSchema>, redirectUrl: string) {
+export async function signup(data: z.infer<typeof SignupSchema>) {
   const supabase = await createClient()
   // we include the `name` in user_metadata
+  const redirectUrl = `${new URL(AUTH_REDIRECT_URL, process.env.NEXT_PUBLIC_BASE_URL).toString()}`
 
   const { error, data: authData } = await supabase.auth.signUp({
     email: data.email,
@@ -66,8 +67,9 @@ export async function getCurrentUser() {
 }
 
 
-export async function resetPassword(email: string, redirectTo: string) {
+export async function resetPassword(email: string) {
   const supabase = await createClient()
+  const redirectTo = `${new URL('reset-password', process.env.NEXT_PUBLIC_BASE_URL).toString()}`
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo
   })
@@ -80,8 +82,8 @@ export async function resetPassword(email: string, redirectTo: string) {
 export async function updatePassword(password: string) {
   const supabase = await createClient()
   const { error, data } = await supabase.auth.updateUser({ password })
-  console.log({data, error})
-  
+  console.log({ data, error })
+
   if (error) {
     throw error
   }

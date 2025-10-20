@@ -21,9 +21,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
 import * as z from "zod"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { signup } from "@/services/auth.service"
 import { AuthError } from "@supabase/supabase-js"
+import { usePathname } from "next/navigation"
+import { AUTH_REDIRECT_URL } from "@/route"
 
 export const SignupSchema = z.object({
   baNo: z.string().min(1, "BA No is required."),
@@ -46,6 +48,7 @@ export function SignUpForm({
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [showVerificationMessage, setShowVerificationMessage] = useState(false)
+  const pathname = usePathname()
 
   const form = useForm<z.infer<typeof SignupSchema>>({
     resolver: zodResolver(SignupSchema),
@@ -67,8 +70,7 @@ export function SignUpForm({
     setError(null)
 
     try {
-      const redirectUrl = `${window.location.origin}/signin`
-      await signup(data, redirectUrl)
+      await signup(data)
       setShowVerificationMessage(true)
     } catch (error) {
       const message = (error as AuthError).message ?? 'Failed to create account. Please try again.'
