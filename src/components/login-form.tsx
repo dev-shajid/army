@@ -50,7 +50,7 @@ function LoginFormContent({
 
     if (resetStatus === 'success') {
       setSuccessMessage('Password reset successful! You can now sign in with your new password.')
-    } else if(error_description){
+    } else if (error_description) {
       setError(decodeURIComponent(error_description.split("+").join(" ")))
     } else if (code) {
       setSuccessMessage('Successfully verified your email! You can now sign in.')
@@ -71,7 +71,8 @@ function LoginFormContent({
     setSuccessMessage(null)
 
     try {
-      await login({ email: data.email, password: data.password })
+      const res = await login({ email: data.email, password: data.password })
+      if (!res.success) throw Error(res.error)
       router.push(AUTH_REDIRECT_URL)
     } catch (error) {
       setError((error as Error).message || 'Invalid email or password. Please try again.')

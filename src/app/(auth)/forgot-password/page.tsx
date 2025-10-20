@@ -45,7 +45,8 @@ export default function ForgotPasswordPage() {
         setError(null)
 
         try {
-            await resetPassword(data.email)
+            const res = await resetPassword(data.email)
+            if (!res.success) throw Error(res.error)
             setIsSuccess(true)
         } catch (error) {
             setError((error as Error || error as AuthError).message || 'Failed to send recovery email. Please try again.')

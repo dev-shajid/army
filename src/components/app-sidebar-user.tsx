@@ -20,8 +20,7 @@ import { useOverlay } from '@/hooks/use-overlay'
 import { toast } from 'sonner'
 import { AuthError } from '@supabase/supabase-js'
 import { useRouter } from 'next/navigation'
-import { AUTH_REDIRECT_URL, DEFAULT_REDIRECT_URL } from '@/route'
-import Link from 'next/link'
+import { AUTH_REDIRECT_URL } from '@/route'
 import { Skeleton } from './ui/skeleton'
 
 export default function AppSidebarUser() {
@@ -31,8 +30,10 @@ export default function AppSidebarUser() {
     const router = useRouter()
 
     async function handleCurrentUser() {
-        const user = await getCurrentUser()
-        userStore.login(user)
+        const res = await getCurrentUser()
+        if (res.data) {
+            userStore.login(res.data)
+        }
     }
 
     useEffect(() => {
@@ -42,7 +43,8 @@ export default function AppSidebarUser() {
     async function handleLogout() {
         try {
             showOverlay()
-            await logout()
+            const res = await logout()
+      if (!res.success) throw Error(res.error)
             userStore.logout()
             router.push(AUTH_REDIRECT_URL)
         } catch (error) {
