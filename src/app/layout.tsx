@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Army Dashboard",
+  title: "SOP & Duty Manuals",
   description: "Military Operations Management System",
 }
 

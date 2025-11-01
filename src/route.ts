@@ -33,5 +33,5 @@ export function isAuthRoute(pathname: string) {
     return false
 }
 
-export const DEFAULT_REDIRECT_URL = '/sop-library'
+export const DEFAULT_REDIRECT_URL = '/'
 export const AUTH_REDIRECT_URL = '/signin'

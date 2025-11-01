@@ -14,10 +14,10 @@ export default function COPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <Link href="/sop-library">
+        <Link href="/sop-policy">
           <Button variant="ghost" size="sm">
             <ChevronLeft className="h-4 w-4 mr-2" />
-            Back to SOP Library
+            Back to SOP Policy
           </Button>
         </Link>
       </div>

@@ -70,7 +70,7 @@ export default function TrainingResultsPage() {
                 Retake Quiz
               </Button>
             </Link>
-            <Link href="/sop-library" className="flex-1">
+            <Link href="/sop-policy" className="flex-1">
               <Button className="w-full">Back to Dashboard</Button>
             </Link>
           </div>

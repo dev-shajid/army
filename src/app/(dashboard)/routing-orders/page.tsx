@@ -1,10 +1,8 @@
-"use client"
-
-import { useState } from "react"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { FileText, CheckCircle2, Clock } from "lucide-react"
+import { FileText, CheckCircle2 } from "lucide-react"
+import PageHeader from "@/components/page-header"
 
 const orders = [
   {
@@ -19,7 +17,7 @@ const orders = [
     title: "Equipment Maintenance Protocol",
     date: "Jan 15, 2025",
     priority: "Medium",
-    acknowledged: true,
+    acknowledged: false,
   },
   {
     id: "RO-2025-003",
@@ -33,30 +31,18 @@ const orders = [
     title: "Leave Policy Amendment",
     date: "Jan 10, 2025",
     priority: "Low",
-    acknowledged: true,
+    acknowledged: false,
   },
 ]
 
-export default function RoutingOrdersPage() {
-  const [ordersList, setOrdersList] = useState(orders)
-
-  const handleAcknowledge = (id: string) => {
-    setOrdersList(ordersList.map((order) => (order.id === id ? { ...order, acknowledged: true } : order)))
-  }
-
+export default function RoutineOrdersPage() {
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="h1">Routing Orders</h1>
-          <p className="text-muted-foreground mt-2">Read and acknowledge routing orders</p>
-        </div>
-        <Button variant="outline">View Archive</Button>
-      </div>
+      <PageHeader title="Routine Orders" description="View and manage your routine orders." />
 
       <div className="grid gap-4">
-        {ordersList.map((order) => (
-          <Card key={order.id} className={!order.acknowledged ? "border-primary" : ""}>
+        {orders.map((order) => (
+          <Card key={order.id}>
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-4 flex-1">
@@ -66,11 +52,7 @@ export default function RoutingOrdersPage() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
                       <CardTitle className="text-lg">{order.title}</CardTitle>
-                      {order.acknowledged ? (
-                        <CheckCircle2 className="h-4 w-4 text-green-600" />
-                      ) : (
-                        <Clock className="h-4 w-4 text-orange-600" />
-                      )}
+                      <CheckCircle2 className="h-4 w-4 text-green-600" />
                     </div>
                     <CardDescription className="space-y-1">
                       <div className="flex items-center gap-3">
@@ -97,11 +79,6 @@ export default function RoutingOrdersPage() {
                   <Button variant="outline" size="sm">
                     View
                   </Button>
-                  {!order.acknowledged && (
-                    <Button size="sm" onClick={() => handleAcknowledge(order.id)}>
-                      Acknowledge
-                    </Button>
-                  )}
                 </div>
               </div>
             </CardHeader>

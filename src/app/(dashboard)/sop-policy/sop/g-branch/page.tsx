@@ -4,26 +4,26 @@ import { ChevronLeft } from "lucide-react"
 import Link from "next/link"
 
 const subFolders = [
-  { title: "Officer", href: "/sop-library/q-branch/officer", description: "Officer-level SOPs" },
-  { title: "JSO", href: "/sop-library/q-branch/jso", description: "Junior Staff Officer SOPs" },
-  { title: "OR", href: "/sop-library/q-branch/or", description: "Other Ranks SOPs" },
+  { title: "Officer", href: "/sop-policy/g-branch/officer", description: "Officer-level SOPs" },
+  { title: "JSO", href: "/sop-policy/g-branch/jso", description: "Junior Staff Officer SOPs" },
+  { title: "OR", href: "/sop-policy/g-branch/or", description: "Other Ranks SOPs" },
 ]
 
-export default function QBranchPage() {
+export default function GBranchPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <Link href="/sop-library">
+        <Link href="/sop-policy">
           <Button variant="ghost" size="sm">
             <ChevronLeft className="h-4 w-4 mr-2" />
-            Back to SOP Library
+            Back to SOP Policy
           </Button>
         </Link>
       </div>
 
       <div>
-        <h1 className="h1">Q Branch</h1>
-        <p className="text-muted-foreground mt-2">Quartermaster Branch Standard Operating Procedures</p>
+        <h1 className="h1">G Branch</h1>
+        <p className="text-muted-foreground mt-2">General Staff Branch Standard Operating Procedures</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

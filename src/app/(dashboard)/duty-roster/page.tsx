@@ -1,90 +1,90 @@
-"use client"
-
-import { useState } from "react"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Calendar, User, Clock } from "lucide-react"
+import PageHeader from "@/components/page-header"
 
 const rosterData = [
-  { date: "Jan 20, 2025", duty: "Guard Duty", personnel: "Cpl. Johnson", shift: "Day", status: "Assigned" },
-  { date: "Jan 20, 2025", duty: "Patrol", personnel: "Sgt. Williams", shift: "Night", status: "Assigned" },
-  { date: "Jan 21, 2025", duty: "Admin Duty", personnel: "Lt. Anderson", shift: "Day", status: "Assigned" },
-  { date: "Jan 21, 2025", duty: "Equipment Check", personnel: "Pvt. Martinez", shift: "Day", status: "Pending" },
-  { date: "Jan 22, 2025", duty: "Guard Duty", personnel: "Unassigned", shift: "Day", status: "Open" },
+  {
+    id: "location-1",
+    name: "Dhaka Cantonment",
+    personnel: [
+      { id: "p1", name: "Md. Karim Khan" },
+      { id: "p2", name: "Faisal Ahmed" },
+      { id: "p3", name: "Jahangir Alam" },
+      { id: "p4", name: "Belal Hossain" },
+      { id: "p5", name: "Rafiq Miah" },
+      { id: "p6", name: "Noor Islam" },
+    ],
+  },
+  {
+    id: "location-2",
+    name: "Chattogram Military",
+    personnel: [
+      { id: "p7", name: "Abdul Mannan" },
+      { id: "p8", name: "Habib Rahman" },
+      { id: "p9", name: "Muhammad Hasan" },
+      { id: "p10", name: "Shafiq Ahmed" },
+      { id: "p11", name: "Jalal Uddin" },
+      { id: "p12", name: "Nasir Ali" },
+    ],
+  },
+  {
+    id: "location-3",
+    name: "Sylhet Region",
+    personnel: [
+      { id: "p13", name: "Sardar Aziz" },
+      { id: "p14", name: "Imtiaz Hussain" },
+      { id: "p15", name: "Harun Ar Rashid" },
+      { id: "p16", name: "Milon Kumar" },
+      { id: "p17", name: "Sujon Roy" },
+      { id: "p18", name: "Rony Chakma" },
+    ],
+  },
+  {
+    id: "location-4",
+    name: "Khulna Cantonment",
+    personnel: [
+      { id: "p19", name: "Anwar Hossain" },
+      { id: "p20", name: "Fazlul Haque" },
+      { id: "p21", name: "Md. Ismail" },
+      { id: "p22", name: "Saiful Islam" },
+      { id: "p23", name: "Rifat Ahmed" },
+      { id: "p24", name: "Tipu Sultan" },
+    ],
+  },
 ]
 
-export default function DutyRosterPage() {
-  const [filter, setFilter] = useState<string>("all")
-
-  const filteredRoster =
-    filter === "all" ? rosterData : rosterData.filter((item) => item.status.toLowerCase() === filter)
-
+export default function SimpleLocationRoster() {
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="h1">Duty Roster</h1>
-          <p className="text-muted-foreground mt-2">Assign and view duty schedules</p>
-        </div>
-        <Button>Assign New Duty</Button>
-      </div>
+    <div className="space-y-6 p-6">
+      <PageHeader title="Duty Roster" description="View and manage your duty roster." />
 
-      <div className="flex gap-2">
-        <Button variant={filter === "all" ? "default" : "outline"} size="sm" onClick={() => setFilter("all")}>
-          All
-        </Button>
-        <Button variant={filter === "assigned" ? "default" : "outline"} size="sm" onClick={() => setFilter("assigned")}>
-          Assigned
-        </Button>
-        <Button variant={filter === "pending" ? "default" : "outline"} size="sm" onClick={() => setFilter("pending")}>
-          Pending
-        </Button>
-        <Button variant={filter === "open" ? "default" : "outline"} size="sm" onClick={() => setFilter("open")}>
-          Open
-        </Button>
-      </div>
-
-      <div className="grid gap-4">
-        {filteredRoster.map((item, index) => (
-          <Card key={index}>
-            <CardHeader>
-              <div className="flex items-start justify-between">
-                <div className="space-y-3 flex-1">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">{item.duty}</CardTitle>
-                    <Badge
-                      variant={
-                        item.status === "Assigned" ? "default" : item.status === "Pending" ? "secondary" : "outline"
-                      }
-                    >
-                      {item.status}
-                    </Badge>
-                  </div>
-                  <CardDescription className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-3 w-3" />
-                      <span>{item.date}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="h-3 w-3" />
-                      <span>{item.shift} Shift</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <User className="h-3 w-3" />
-                      <span>{item.personnel}</span>
-                    </div>
-                  </CardDescription>
-                </div>
-                {item.status === "Open" && (
-                  <Button size="sm" className="ml-4">
-                    Assign
-                  </Button>
-                )}
-              </div>
-            </CardHeader>
-          </Card>
-        ))}
+      <div className="overflow-x-auto">
+        <table className="min-w-[1000px] w-full border-collapse rounded-md overflow-hidden">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-slate-800">
+              {rosterData.map((location) => (
+                <th
+                  key={location.id}
+                  className="border border-slate-200 dark:border-slate-700 px-6 py-4 text-left font-semibold text-sm"
+                >
+                  {location.name}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {Array.from({ length: 6 }).map((_, rowIndex) => (
+              <tr key={rowIndex}>
+                {rosterData.map((location) => (
+                  <td
+                    key={`${location.id}-row-${rowIndex}`}
+                    className="border border-slate-200 dark:border-slate-700 px-6 py-4 text-sm"
+                  >
+                    {location.personnel[rowIndex] ? location.personnel[rowIndex].name : "—"}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   )

@@ -7,14 +7,14 @@ import { BookOpen, ClipboardList, GraduationCap, Calendar, FileText, Folder, Sea
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 
 const commandItems = [
-  // SOP Library
-  { title: "SOP Library - View SOPs", href: "/sop-library", icon: BookOpen, category: "SOP Library" },
-  { title: "A Branch", href: "/sop-library/a-branch", icon: Folder, category: "SOP Library" },
-  { title: "Q Branch", href: "/sop-library/q-branch", icon: Folder, category: "SOP Library" },
-  { title: "G Branch", href: "/sop-library/g-branch", icon: Folder, category: "SOP Library" },
-  { title: "CO", href: "/sop-library/co", icon: Folder, category: "SOP Library" },
-  { title: "Staff Officer", href: "/sop-library/staff-officer", icon: Folder, category: "SOP Library" },
-  { title: "Branch Clerk", href: "/sop-library/branch-clerk", icon: Folder, category: "SOP Library" },
+  // SOP Policy
+  { title: "SOP Policy - View SOPs", href: "/sop-policy", icon: BookOpen, category: "SOP Policy" },
+  { title: "A Branch", href: "/sop-policy/a-branch", icon: Folder, category: "SOP Policy" },
+  { title: "Q Branch", href: "/sop-policy/q-branch", icon: Folder, category: "SOP Policy" },
+  { title: "G Branch", href: "/sop-policy/g-branch", icon: Folder, category: "SOP Policy" },
+  { title: "CO", href: "/sop-policy/co", icon: Folder, category: "SOP Policy" },
+  { title: "Staff Officer", href: "/sop-policy/staff-officer", icon: Folder, category: "SOP Policy" },
+  { title: "Branch Clerk", href: "/sop-policy/branch-clerk", icon: Folder, category: "SOP Policy" },
 
   // Duty Manual
   { title: "Duty Manual - Check Duties", href: "/duty-manual", icon: ClipboardList, category: "Duty Manual" },
@@ -26,9 +26,8 @@ const commandItems = [
   // Duty Roster
   { title: "Duty Roster - Assign/View Duty", href: "/duty-roster", icon: Calendar, category: "Duty Roster" },
 
-  // Routing Orders
-  { title: "Routing Orders - Read & Ack", href: "/routing-orders", icon: FileText, category: "Routing Orders" },
-  { title: "Routing Orders - Sync Reports", href: "/routing-orders/sync", icon: FileText, category: "Routing Orders" },
+  // Routine Orders
+  { title: "Routine Orders - Read & Ack", href: "/routine-orders", icon: FileText, category: "Routine Orders" },
 ]
 
 export default function CommandPalette() {
@@ -68,7 +67,7 @@ export default function CommandPalette() {
         <CommandInput placeholder="Type a command or search..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          {["SOP Library", "Duty Manual", "Training", "Duty Roster", "Routing Orders"].map((category) => (
+          {["SOP Policy", "Duty Manual", "Training", "Duty Roster", "Routine Orders"].map((category) => (
             <CommandGroup key={category} heading={category}>
               {commandItems
                 .filter((item) => item.category === category)

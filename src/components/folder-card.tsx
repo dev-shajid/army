@@ -11,7 +11,7 @@ interface FolderCardProps {
 export function FolderCard({ title, href, description }: FolderCardProps) {
     return (
         <Link href={href}>
-            <Card className="group hover:bg-accent hover:border-primary transition-all cursor-pointer">
+            <Card className="group hover:bg-accent hover:border-primary transition-all cursor-pointer max-w-sm">
                 <CardContent className="flex items-center gap-4 p-6">
                     <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                         <Folder className="h-6 w-6" />

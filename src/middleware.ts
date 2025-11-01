@@ -32,7 +32,7 @@ export async function middleware(request: NextRequest) {
             return NextResponse.redirect(url)
         }
 
-        if ((user && isAuthRoute(pathname)) || pathname=='/') {
+        if (user && isAuthRoute(pathname)) {
             // Already authenticated visiting an auth route -> send to app home
             const url = new URL(DEFAULT_REDIRECT_URL, request.url)
             return NextResponse.redirect(url)
