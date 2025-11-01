@@ -4,10 +4,10 @@ import { ChevronLeft } from "lucide-react"
 import Link from "next/link"
 
 const documents = [
-  { title: "Daily Routine Orders", date: "Updated: Jan 15, 2025", size: "2.4 MB" },
-  { title: "Leave Application Procedures", date: "Updated: Jan 10, 2025", size: "1.8 MB" },
-  { title: "Personnel Management Guidelines", date: "Updated: Dec 28, 2024", size: "3.2 MB" },
-  { title: "Administrative Reporting Standards", date: "Updated: Dec 20, 2024", size: "2.1 MB" },
+  { title: "Daily Routine Orders", fileId: '1SGDJHWHvHg5rcxuVFNCeQejKzV2sZI1d' },
+  { title: "Leave Application Procedures", fileId: '1SGDJHWHvHg5rcxuVFNCeQejKzV2sZI1d' },
+  { title: "Personnel Management Guidelines", fileId: '1SGDJHWHvHg5rcxuVFNCeQejKzV2sZI1d' },
+  { title: "Administrative Reporting Standards", fileId: '1SGDJHWHvHg5rcxuVFNCeQejKzV2sZI1d' },
 ]
 
 export default function ABranchOfficerPage() {
