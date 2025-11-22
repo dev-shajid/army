@@ -48,14 +48,6 @@ const menuItems: ISidebarItem[] = [
             { title: "Policy", href: "/sop-policy/policy" },
         ],
     },
-    // {
-    //     title: "Training",
-    //     icon: GraduationCap,
-    //     items: [
-    //         { title: "Take Quiz", href: "/training/quiz" },
-    //         { title: "Show Result", href: "/training/results" },
-    //     ],
-    // },
     {
         title: "Duty Roster",
         icon: Calendar,
@@ -65,7 +57,7 @@ const menuItems: ISidebarItem[] = [
         title: "Routine Orders",
         icon: FileText,
         items: [
-            { title: "Read & Ack", href: "/routine-orders" },
+            { title: "Part 1 & Part 2", href: "/parts" },
         ],
     },
     {

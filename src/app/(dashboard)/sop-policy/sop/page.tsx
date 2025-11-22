@@ -1,6 +1,5 @@
 import { FolderCard } from "@/components/folder-card"
 import PageHeader from "@/components/page-header"
-import PDFViewer from "@/components/pdf-viewer"
 
 const branches = [
   { title: "A Branch", href: "/sop-policy/sop/a-branch", description: "Administrative Branch SOPs" },
@@ -21,8 +20,6 @@ export default function SOPPage() {
           <FolderCard key={branch.href} title={branch.title} href={branch.href} description={branch.description} />
         ))}
       </div>
-
-      <PDFViewer />
     </div>
   )
 }

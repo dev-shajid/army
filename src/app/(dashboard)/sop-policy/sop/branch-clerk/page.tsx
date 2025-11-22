@@ -1,11 +1,11 @@
 import DriveFileList from "@/components/drive-file-list"
 
-export default function COPage() {
+export default function ClerkPage() {
   return (
     <DriveFileList
-      title="Commanding Officer"
+      title="Branch Clerk"
       description="Standard Operating Procedures for Commanding Officers"
-      category="co_officer"
+      category="branch_clerk"
     />
   )
 }

@@ -20,7 +20,15 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState<string | undefined>(undefined);
     const [spinnerSize, setSpinnerSize] = useState<SpinnerSize>("md");
-    const pathname = usePathname()
+    
+    // Safe pathname access that works during SSR/prerender
+    let pathname: string | null = null
+    try {
+        pathname = usePathname()
+    } catch {
+        // During prerender, pathname might not be available
+        pathname = null
+    }
 
     const showOverlay = useCallback((msg?: string, size: SpinnerSize = "md") => {
         setMessage(msg);

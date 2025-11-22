@@ -110,3 +110,50 @@ export async function deleteDriveFile(id: string): Promise<Response<null>> {
         return { success: false, error: e.message }
     }
 }
+
+export async function searchDriveFiles(query: string): Promise<Response<DriveFile[]>> {
+  try {
+    if (!query || query.trim().length === 0) {
+      return { success: true, data: [] }
+    }
+
+    const supabase = await createClient()
+
+    const { data, error } = await supabase
+      .from('drive_file')
+      .select('id, title, file_id, category, created_at')
+      .ilike('title', `%${query}%`)
+      .order('created_at', { ascending: false })
+      .limit(10)
+
+    if (error) {
+      console.error('Supabase error:', error)
+      return {
+        success: false,
+        error: error.message,
+        data: [],
+      }
+    }
+
+    // Transform the response to match DriveFile interface
+    const transformedData: DriveFile[] = (data || []).map((file: any) => ({
+      id: file.id,
+      fileId: file.file_id, // Convert snake_case to camelCase
+      title: file.title,
+      category: file.category,
+      createdAt: file.created_at,
+    }))
+
+    return {
+      success: true,
+      data: transformedData,
+    }
+  } catch (error) {
+    console.error('Search error:', error)
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'An error occurred',
+      data: [],
+    }
+  }
+}
