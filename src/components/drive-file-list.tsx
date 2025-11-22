@@ -11,9 +11,10 @@ interface DriveFileListProps {
     title: string
     description?: string
     category: DriveCategory
+    back?: boolean
 }
 
-export default async function DriveFileList({ title, description, category }: DriveFileListProps) {
+export default async function DriveFileList({ title, description, category, back=false }: DriveFileListProps) {
     const admin = await isAdmin()
     const res = await listDriveFiles(category)
     const documents = res.success && res.data ? res.data : []
@@ -39,7 +40,7 @@ export default async function DriveFileList({ title, description, category }: Dr
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <PageHeader title={title} description={description} />
+                <PageHeader title={title} description={description} back={back} />
                 {admin && (
                     <AddDriveFileDialog category={category} onAdd={addAction} />
                 )}

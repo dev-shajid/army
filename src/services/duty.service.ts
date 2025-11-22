@@ -29,7 +29,6 @@ export async function getDutyRoster(): Promise<Response<DutyColumn>> {
         const { data, error } = await supabase
             .from('duty_roster')
             .select('*')
-        console.log({ data, error })
 
         if (error) throw error
 

@@ -27,7 +27,7 @@ const categoryMapping: Record<string, string> = {
   co: "Commanding Officer",
   co_officer: "Commanding Officer",
   staff_officer: "Staff Officer",
-  branch_clerk: "Branch Clerk",
+  appointment_holders: "Appointment Holders",
   policy: "Policy",
   duty_roster: "Duty Roster",
   routine_orders: "Routine Orders",
@@ -53,27 +53,19 @@ const commandItems: CommandItemDef[] = [
   { title: "Policy Documents", href: "/sop-policy/policy", icon: FileText, category: "SOP Policy" },
 
   // A Branch
-  { title: "A Branch - Overview", href: "/sop-policy/sop/a-branch", icon: Folder, category: "SOP Policy" },
-  { title: "A Branch - Officer", href: "/sop-policy/sop/a-branch/officer", icon: FileText, category: "SOP Policy" },
-  { title: "A Branch - JCO", href: "/sop-policy/sop/a-branch/jco", icon: FileText, category: "SOP Policy" },
-  { title: "A Branch - OR", href: "/sop-policy/sop/a-branch/or", icon: FileText, category: "SOP Policy" },
+  { title: "A Branch", href: "/sop-policy/sop/a-branch", icon: Folder, category: "SOP Policy" },
 
   // Q Branch
-  { title: "Q Branch - Overview", href: "/sop-policy/sop/q-branch", icon: Folder, category: "SOP Policy" },
-  { title: "Q Branch - Officer", href: "/sop-policy/sop/q-branch/officer", icon: FileText, category: "SOP Policy" },
-  { title: "Q Branch - JCO", href: "/sop-policy/sop/q-branch/jco", icon: FileText, category: "SOP Policy" },
-  { title: "Q Branch - OR", href: "/sop-policy/sop/q-branch/or", icon: FileText, category: "SOP Policy" },
+  { title: "Q Branch", href: "/sop-policy/sop/q-branch", icon: Folder, category: "SOP Policy" },
 
   // G Branch
-  { title: "G Branch - Overview", href: "/sop-policy/sop/g-branch", icon: Folder, category: "SOP Policy" },
-  { title: "G Branch - Officer", href: "/sop-policy/sop/g-branch/officer", icon: FileText, category: "SOP Policy" },
-  { title: "G Branch - JCO", href: "/sop-policy/sop/g-branch/jco", icon: FileText, category: "SOP Policy" },
-  { title: "G Branch - OR", href: "/sop-policy/sop/g-branch/or", icon: FileText, category: "SOP Policy" },
+  { title: "G Branch", href: "/sop-policy/sop/g-branch", icon: Folder, category: "SOP Policy" },
 
   // Other SOPs
-  { title: "CO - Commanding Officer", href: "/sop-policy/sop/co", icon: FileText, category: "SOP Policy" },
+  { title: "Commanding Officer", href: "/sop-policy/sop/co", icon: FileText, category: "SOP Policy" },
   { title: "Staff Officer", href: "/sop-policy/sop/staff-officer", icon: FileText, category: "SOP Policy" },
-  { title: "Branch Clerk", href: "/sop-policy/sop/branch-clerk", icon: FileText, category: "SOP Policy" },
+  { title: "Appointment Holders", href: "/sop-policy/sop/appointment-holders", icon: FileText, category: "SOP Policy" },
+  { title: "Other SOPs", href: "/sop-policy/sop/other", icon: FileText, category: "SOP Policy" },
 
   // Duty Roster
   { title: "Duty Roster - View", href: "/duty-roster", icon: Calendar, category: "Duty Roster" },

@@ -2,8 +2,8 @@ import { FolderCard } from '@/components/folder-card'
 import React from 'react'
 
 const branches = [
-  { title: "SOP", href: "/sop-policy/sop", description: "Standard Operating Procedures" },
-  { title: "POLICY", href: "/sop-policy/policy", description: "Administrative Branch Policies" },
+  { title: "SOP", href: "/sop-policy/sop" },
+  { title: "POLICY", href: "/sop-policy/policy" },
 ]
 
 export default function SOPPolicyPage() {
@@ -16,7 +16,7 @@ export default function SOPPolicyPage() {
 
             <div className="grid gap-4 md:grid-cols-2 place-items-center">
                 {branches.map((branch) => (
-                    <FolderCard key={branch.href} title={branch.title} href={branch.href} description={branch.description} />
+                    <FolderCard key={branch.href} title={branch.title} href={branch.href} />
                 ))}
             </div>
         </div>
