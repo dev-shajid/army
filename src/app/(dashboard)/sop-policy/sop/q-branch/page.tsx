@@ -5,7 +5,7 @@ import Link from "next/link"
 
 const subFolders = [
   { title: "Officer", href: "/sop-policy/q-branch/officer", description: "Officer-level SOPs" },
-  { title: "JSO", href: "/sop-policy/q-branch/jso", description: "Junior Staff Officer SOPs" },
+  { title: "JCO", href: "/sop-policy/q-branch/JCO", description: "Junior Staff Officer SOPs" },
   { title: "OR", href: "/sop-policy/q-branch/or", description: "Other Ranks SOPs" },
 ]
 

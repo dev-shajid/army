@@ -3,7 +3,7 @@ import PageHeader from "@/components/page-header"
 const rosterData = [
   {
     id: "location-1",
-    name: "Dhaka Cantonment",
+    name: "RP Duty",
     personnel: [
       { id: "p1", name: "Md. Karim Khan" },
       { id: "p2", name: "Faisal Ahmed" },
@@ -15,7 +15,8 @@ const rosterData = [
   },
   {
     id: "location-2",
-    name: "Chattogram Military",
+    name: "First Duty",
+    time: "2100-0000",
     personnel: [
       { id: "p7", name: "Abdul Mannan" },
       { id: "p8", name: "Habib Rahman" },
@@ -27,7 +28,8 @@ const rosterData = [
   },
   {
     id: "location-3",
-    name: "Sylhet Region",
+    name: "Second Duty",
+    time: "0000-0300",
     personnel: [
       { id: "p13", name: "Sardar Aziz" },
       { id: "p14", name: "Imtiaz Hussain" },
@@ -39,7 +41,8 @@ const rosterData = [
   },
   {
     id: "location-4",
-    name: "Khulna Cantonment",
+    name: "Third Duty ",
+    time: "0300-0600",
     personnel: [
       { id: "p19", name: "Anwar Hossain" },
       { id: "p20", name: "Fazlul Haque" },
@@ -65,7 +68,8 @@ export default function SimpleLocationRoster() {
                   key={location.id}
                   className="border border-slate-200 dark:border-slate-700 px-6 py-4 text-left font-semibold text-sm"
                 >
-                  {location.name}
+                  <p>{location.name}</p>
+                  <p>{location.time}</p>
                 </th>
               ))}
             </tr>
