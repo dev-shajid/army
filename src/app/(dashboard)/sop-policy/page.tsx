@@ -13,7 +13,7 @@ export default function SOPPolicyPage() {
             <PageHeader
                 title='SOP Policy'
             />
-            <div className="flex items-center gap-8">
+            <div className="grid grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
                 {branches.map((branch) => (
                     <FolderCard key={branch.href} title={branch.title} href={branch.href} />
                 ))}
