@@ -13,7 +13,7 @@ export default function PageHeader({ title, description, back = false }: PageHea
     const router = useRouter()
     return (
         <div>
-            {back ? <div className="flex gap-2 items-center mb-2 text-xs" onClick={() => router.back()}>
+            {back ? <div className="inline-flex gap-2 items-center mb-2 text-xs cursor-pointer" onClick={() => router.back()}>
                 <ChevronLeft size={16} />
                 Back
             </div> : null}

@@ -14,7 +14,7 @@ const branches = [
 export default function SOPPage() {
   return (
     <div className="space-y-6">
-      <PageHeader title="SOP Policy" description="Access Standard Operating Procedures organized by branch and role" />
+      <PageHeader title="SOP" description="Access Standard Operating Procedures organized by branch and role" />
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {branches.map((branch) => (
