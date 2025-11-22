@@ -7,7 +7,7 @@ const branches = [
   { title: "G Branch", href: "/sop-policy/sop/g-branch" },
   { title: "CO", href: "/sop-policy/sop/co" },
   { title: "Staff Officer", href: "/sop-policy/sop/staff-officer" },
-  { title: "Branch Appointment Holders", href: "/sop-policy/sop/appointment-holders" },
+  { title: "Appointment Holders", href: "/sop-policy/sop/appointment-holders" },
   { title: "Other SOPs", href: "/sop-policy/sop/other" },
 ]
 
