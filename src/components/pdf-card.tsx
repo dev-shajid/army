@@ -5,12 +5,12 @@ import { FileText, Loader2 } from 'lucide-react'
 import { Button } from './ui/button'
 import { useEffect, useState } from 'react'
 
-interface PDFCardProps {
+interface PDFCardDoc {
     title: string
     fileId: string
 }
 
-export default function PDFCard({ doc }: { doc: PDFCardProps }) {
+export default function PDFCard({ doc, rightSlot }: { doc: PDFCardDoc; rightSlot?: React.ReactNode }) {
     // Google Drive URLs
     const previewUrl = `https://drive.google.com/file/d/${doc.fileId}/preview`
     const downloadUrl = `https://drive.google.com/uc?export=download&id=${doc.fileId}`
@@ -74,21 +74,23 @@ export default function PDFCard({ doc }: { doc: PDFCardProps }) {
                         <CardTitle className="text-lg">{doc.title}</CardTitle>
                     </div>
                 </div>
-                {/* Download Button (client-side fetch) */}
-                <Button
-                    size='sm'
-                    onClick={handleDownload}
-                    disabled={isDownloading}
-                >
-                    {isDownloading ? (
-                        <>
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                            Downloading...
-                        </>
-                    ) : (
-                        'Download'
-                    )}
-                </Button>
+                <div className="flex items-center gap-2" onClick={(e) => { /* prevent bubbling from action buttons */ e.stopPropagation() }}>
+                    <Button
+                        size='sm'
+                        onClick={handleDownload}
+                        disabled={isDownloading}
+                    >
+                        {isDownloading ? (
+                            <>
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                Downloading...
+                            </>
+                        ) : (
+                            'Download'
+                        )}
+                    </Button>
+                    {rightSlot}
+                </div>
             </CardHeader>
         </Card>
     )

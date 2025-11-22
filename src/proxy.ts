@@ -3,7 +3,7 @@ import { AUTH_REDIRECT_URL, DEFAULT_REDIRECT_URL, isAuthRoute, isPublicRoute } f
 import { createClient } from './supabase/server'
 
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
 
     const supabaseResponse = NextResponse.next({
         request,

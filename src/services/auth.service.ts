@@ -32,11 +32,15 @@ export async function signup(data: z.infer<typeof SignupSchema>): Promise<Respon
   // we include the `name` in user_metadata
   const redirectUrl = `${new URL(AUTH_REDIRECT_URL, process.env.NEXT_PUBLIC_BASE_URL).toString()}`
 
+  const { password, ...rest } = data
   const { error, data: authData } = await supabase.auth.signUp({
     email: data.email,
-    password: data.password,
+    password: password,
     options: {
-      data,
+      data: {
+        ...rest,
+        role: 'user'
+      },
       emailRedirectTo: redirectUrl
     },
   })
@@ -47,11 +51,10 @@ export async function signup(data: z.infer<typeof SignupSchema>): Promise<Respon
 
   // Optionally: You can redirect to a “check your email” page
   // rather than logging in immediately.
-  return { success: true}
+  return { success: true }
 }
 
-
-export async function logout() : Promise<Response<null>> {
+export async function logout(): Promise<Response<null>> {
   const supabase = await createClient()
   const { error } = await supabase.auth.signOut()
   if (error) {
@@ -60,7 +63,6 @@ export async function logout() : Promise<Response<null>> {
 
   return { success: true }
 }
-
 
 export async function getCurrentUser(): Promise<Response<User>> {
   const supabase = await createClient()
@@ -71,8 +73,57 @@ export async function getCurrentUser(): Promise<Response<User>> {
   return { success: true, data: data.user }
 }
 
+export interface UserProfile {
+  id: string
+  email: string
+  name?: string
+  role: 'user' | 'admin'
+  appointment?: string
+  baNo?: string
+  formation?: string
+  mobile?: string
+  rank?: string
+  unitName?: string
+  email_verified?: boolean
+  phone_verified?: boolean
+}
 
-export async function resetPassword(email: string) : Promise<Response<null>> {
+// Get current user's profile data with role (excludes password)
+export async function getUserProfile(): Promise<Response<UserProfile>> {
+  const supabase = await createClient()
+  const { data, error } = await supabase.auth.getUser()
+
+  if (error) {
+    return { success: false, error: error.message }
+  }
+
+  if (!data.user) {
+    return { success: false, error: 'User not found' }
+  }
+
+  const { user } = data
+  const metadata = user.user_metadata as any
+
+  // Extract all fields except password
+  const { password, ...safeMetadata } = metadata
+
+  const profile: UserProfile = {
+    id: user.id,
+    email: user.email || '',
+    role: metadata?.role || 'user',
+    ...safeMetadata
+  }
+
+  return { success: true, data: profile }
+}
+
+// Check if current user is admin
+export async function isAdmin(): Promise<boolean> {
+  const result = await getUserProfile()
+  return result.success && result.data?.role === 'admin'
+}
+
+export async function resetPassword(email: string): Promise<Response<null>> {
   const supabase = await createClient()
   const redirectTo = `${new URL('reset-password', process.env.NEXT_PUBLIC_BASE_URL).toString()}`
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -81,5 +132,33 @@ export async function resetPassword(email: string) : Promise<Response<null>> {
   if (error) {
     return { success: false, error: error.message }
   }
+  return { success: true }
+}
+
+export async function updateOwnRole(role: 'admin' | 'user'): Promise<Response<null>> {
+  const supabase = await createClient()
+  const { data: { user }, error: userError } = await supabase.auth.getUser()
+
+  if (userError) {
+    return { success: false, error: userError.message }
+  }
+
+  if (!user) {
+    return { success: false, error: 'No authenticated user' }
+  }
+
+  const { error } = await supabase
+    .from('users')
+    .update({ role })
+    .eq('id', user.id)
+
+  await supabase.auth.updateUser({
+    data: { role }
+  })
+
+  if (error) {
+    return { success: false, error: error.message }
+  }
+
   return { success: true }
 }

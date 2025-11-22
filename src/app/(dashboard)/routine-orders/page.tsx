@@ -1,8 +1,10 @@
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { FileText, CheckCircle2 } from "lucide-react"
+import { FileText, CheckCircle2, Settings } from "lucide-react"
 import PageHeader from "@/components/page-header"
+import Link from "next/link"
+import { isAdmin } from "@/services/auth.service"
 
 const orders = [
   {
@@ -35,10 +37,22 @@ const orders = [
   },
 ]
 
-export default function RoutineOrdersPage() {
+export default async function RoutineOrdersPage() {
+  const isAdminUser = await isAdmin()
+
   return (
     <div className="space-y-6">
-      <PageHeader title="Routine Orders" description="View and manage your routine orders." />
+      <div className="flex items-center justify-between">
+        <PageHeader title="Routine Orders" description="View and manage your routine orders." />
+        {isAdminUser && (
+          <Link href="/routing-orders/sync">
+            <Button variant="outline" size="sm">
+              <Settings className="h-4 w-4 mr-2" />
+              Manage Duty Roster
+            </Button>
+          </Link>
+        )}
+      </div>
 
       <div className="grid gap-4">
         {orders.map((order) => (
